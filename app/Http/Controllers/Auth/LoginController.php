@@ -42,7 +42,7 @@ class LoginController extends Controller{
         $this->session = session();
         $this->__cache = $__cache;
 
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest:web')->except('logout');
 
     }
 
@@ -72,7 +72,7 @@ class LoginController extends Controller{
         }
 
 
-        if($this->auth->guard()->attempt($this->credentials($request))){
+        if($this->auth->guard('web')->attempt($this->credentials($request))){
 
             if($this->auth->user()->is_active == false){
 
@@ -82,11 +82,11 @@ class LoginController extends Controller{
 
             }else{
 
-                $user = $this->user_repo->login($this->auth->user()->slug);
+                //$user = $this->user_repo->login($this->auth->user()->slug);
 
-                $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
-                $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-                $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
+                // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
+                // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
+                // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
 
                 $this->clearLoginAttempts($request);
                 return redirect()->intended('dashboard/home');
@@ -107,19 +107,19 @@ class LoginController extends Controller{
 
     public function logout(Request $request){
         
-        if($request->isMethod('post')){
+        if($request->isMethod('get')){
 
-            $user = $this->user_repo->logout($this->auth->user()->slug);
+            //$user = $this->user_repo->logout($this->auth->user()->slug);
             
             $this->session->flush();
-            $this->guard()->logout();
-            $request->session()->invalidate();
+            $this->auth->guard('web')->logout();
+            // $request->session()->invalidate();
 
-            $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
-            $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-            $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
+            // // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
+            // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
+            // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
 
-            $this->session->flash('LOGOUT_SUCCESS','You have been logged out successfully!');
+            // $this->session->flash('LOGOUT_SUCCESS','You have been logged out successfully!');
 
             return redirect('/');
 

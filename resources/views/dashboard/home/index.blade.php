@@ -3,7 +3,7 @@
 @section('content')
 
 <section class="content-header">
-    <h1>Dashboard</h1>
+    <h1> ADMIN Dashboard</h1>
 </section>
 
 <section class="content">

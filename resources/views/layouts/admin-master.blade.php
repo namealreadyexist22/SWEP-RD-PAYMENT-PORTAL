@@ -3,21 +3,21 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>General Admin Portal</title>
+    <title>SWEP | ONLINE PAYMENT PORTAL</title>
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('layouts.css-plugins')  
     @yield('utils')
   </head>
-  <body class="hold-transition {!! Auth::check() ? __sanitize::html_encode(Auth::user()->color) : '' !!}" style="zoom:97%;">
+  <body class="hold-transition sidebar-mini skin-green {!! Auth::check() ? __sanitize::html_encode(Auth::user()->color) : '' !!}" style="zoom:97%;">
 
     <div id="loader"></div>
 
     <div class="wrapper">
 
       @include('layouts.admin-topnav')
-      @include('layouts.admin-sidenav') 
+      @include('layouts.admin-sidenavs') 
 
       <div class="content-wrapper" style="height:500em;"> 
         @yield('content')
@@ -61,12 +61,27 @@
 
     @yield('scripts')
 
-    @if($errors->any())
-      <script type="text/javascript">
-        $("#error_fields").modal("show");
-      </script>
-    @endif
 
+
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        cure_url = window.location.href;
+
+        // setTimeout(function(){
+        //   $("a[href='"+cure_url+"']").parent('li').parent('ul').siblings('a').click();
+        // },200);
+        
+        $("a[href='"+cure_url+"']").parent('li').parent('ul').parent('li').addClass('active');
+
+
+        $("a[href='"+cure_url+"']").parent('li').addClass('active');
+        
+
+      })
+
+      
+    </script>
   </body>
 
 </html>
