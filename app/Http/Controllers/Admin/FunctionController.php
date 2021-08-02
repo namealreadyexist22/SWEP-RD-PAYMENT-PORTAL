@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Swep\Services\Admin\MenuService;
 use App\Http\Requests\Admin\FunctionFormRequest;
 use App\Swep\Services\Admin\FunctionService;
-use Datatables;
+use DataTables;
 class FunctionController extends Controller
 {
     /**
@@ -30,7 +30,7 @@ class FunctionController extends Controller
             //if AJAX is detected coming from datatable
             if(request()->get('type') == "dataTable"){
                 $data = request();
-                return Datatables::of($this->function_service->fetchTable($data))
+                return DataTables::of($this->function_service->fetchTable($data))
                 ->addColumn('action', function($data){
                     $button = '<div class="btn-group">
                                     <button type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_function_btn" data-toggle="modal" data-target="#edit_function_modal" title="Edit" data-placement="top">
@@ -51,18 +51,18 @@ class FunctionController extends Controller
                     }
                     
                 })
-                ->editColumn('functions', function($data){
-                    // $ret = '';
-
-                    // foreach ($data->submenu as $key => $value) {
-                    //     $value->name = str_replace($data->name, '', $value->name);
-                    //     $ret = $ret . $value->name .' | ';
-                    // }
-                    // return substr_replace($ret ,"", -2);
-                    return 'funtions';
-                }) 
-                ->editColumn('icon', function($data){
-                    return '<center><span><i class="fa '.$data->icon.'"></i></span></center>';
+                ->editColumn('function_belongs_to',function($data){
+                    if($data->function_belongs_to == 'admin'){
+                        return '<center><span class="bg-green label">Admin</span></center>';
+                    }elseif($data->function_belongs_to == 'user'){
+                        return '<center><span class="bg-blue label">User</center>';
+                    }else{
+                        return $data->function_belongs_to;
+                    }
+                    
+                })
+                ->editColumn('function_icon', function($data){
+                    return '<center><span><i class="'.$data->function_icon.'"></i></span></center>';
                 })         
                 ->escapeColumns([])
                 ->setRowId('slug')

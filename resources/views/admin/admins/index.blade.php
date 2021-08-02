@@ -137,7 +137,7 @@
 									                        	<div class="col-sm-12">
 									                        		<select multiple="" name="menus[{{$menu->slug}}][]" class="form-control select_multiple" size="6" menu="{{$menu->slug}}">
 									                        			@foreach($menu->functions as $function)            
-											                        		@if($function->belongs_to == 'admin')
+											                        		@if($function->function_belongs_to == 'admin')
 											                        			<option value="{{$function->slug}}" menu="{{$menu->slug}}">
 											                        			{{$function->function_name}}
 											                        		</option>

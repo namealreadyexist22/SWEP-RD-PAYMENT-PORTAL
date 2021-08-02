@@ -107,7 +107,7 @@
 
 
 {{-- Function INDEX Modal --}}
-{!! __html::blank_modal('functions_index_modal','lg') !!}
+{!! __html::blank_modal('functions_index_modal','xl') !!}
 {!! __html::blank_modal('edit_menu_modal','sm') !!}
 {!! __html::blank_modal('edit_function_modal','sm' ,'style="margin-top:100px"') !!}
 
@@ -127,7 +127,9 @@
 						{!! __form::a_textbox( 12,'Name','function_name', 'text', 'Name of Function','', '')!!}
 						{!! __form::a_textbox( 12,'Label','function_label', 'text', 'This may show in sidebar','', '')!!}
 						{!! __form::a_textbox( 12,'Route','function_route', 'text', 'Function route','', '')!!}
-						{!! __form::a_select(12, 'Is nav', 'function_is_nav', ['Yes' => 1, 'No' => '0'], '', '') !!}
+						{!! __form::a_textbox( 12,'Icon','function_icon', 'text', 'Function icon','', '')!!}
+						{!! __form::a_select(6, 'Is nav', 'function_is_nav', ['Yes' => 1, 'No' => '0'], '', '') !!}
+						{!! __form::a_select(6, 'Belongs to', 'function_belongs_to', ['Admin' => 'admin', 'User' => 'user'], '', '') !!}
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -186,21 +188,21 @@
 			"order" : [[0, 'asc']],
 			"responsive": false,
 			"initComplete": function( settings, json ) {
-			  $('#tbl_loader').fadeOut(function(){
-			    $("#menus_table_container").fadeIn();
-			  });
-			  dt_press_enter('#menus_table_filter',menus_tbl);
+				  $('#tbl_loader').fadeOut(function(){
+					$("#menus_table_container").fadeIn();
+				  });
+				  dt_press_enter('#menus_table_filter',menus_tbl);
 			},
 			"language": 
 			{          
 			  "processing": "<center><img style='width: 70px' src=''></center>",
 			},
 			"drawCallback": function(settings){
-			$('[data-toggle="tooltip"]').tooltip();
-			$('[data-toggle="modal"]').tooltip();
-			if(active != ''){
-			   $("#menus_table #"+active).addClass('success');
-			}
+				$('[data-toggle="tooltip"]').tooltip();
+				$('[data-toggle="modal"]').tooltip();
+				if(active != ''){
+				   $("#menus_table #"+active).addClass('success');
+				}
 			}
 		});
 	});	
@@ -273,6 +275,8 @@
 				succeed(form,true,false);
 				function_active = response.slug;
 				functions_tbl.draw();
+				active = response.menu_slug;
+				menus_tbl.draw();
 			},
 			error: function(response){
 				errored(form,response);
@@ -372,6 +376,8 @@
 				succeed(form,true,true);
 				function_active = response.slug
 				functions_tbl.draw();
+				active = response.menu_slug;
+				menus_tbl.draw();
 			},
 			error:function (response){
 				errored(form,response);

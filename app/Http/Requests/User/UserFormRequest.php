@@ -34,7 +34,10 @@ class UserFormRequest extends FormRequest{
             'barangay'=>'required|string|max:45',
             'address'=>'nullable|string|max:45',
             'email'=>'required|string|email|max:45|unique:users,email',
-            'username'=>'required|string|max:45|unique:users,username',
+            'business_name' => 'required|string|max:99',
+            'business_tin' => 'required|int|max:999999999999',
+            'business_phone' => 'required|string|max:45',
+//            'username'=>'required|string|max:45|unique:users,username',
             'password'=>'sometimes|required|string|min:6|max:45|same:password_confirmation',
             'password_confirmation'=>'sometimes|required|string|min:6|max:45|same:password',
         ];

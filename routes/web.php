@@ -9,7 +9,7 @@ Route::group(['as' => 'auth.'], function () {
 	Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 	Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 	Route::post('/signup','User\UserController@store')->name('signup');
-
+    Route::get('/register','User\UserController@showForm')->name('signup.show_form');
 });
 
 
@@ -48,6 +48,14 @@ Route::group(['as' => 'auth.'], function () {
 		
 		Route::get('shipping-permits/my-shipping-permits', 'Shared\ShippingPermitController@userIndex')->name('shipping-permits.my-shipping-permits');
 		Route::get('shipping-permits/apply', 'Shared\ShippingPermitController@userShowApply')->name('shipping-permits.apply');
+        Route::post('payments/validate_form', 'PaymentController@validateForm')->name('payments.validate_form');
+        Route::get('payments/view_file', 'PaymentController@view_file')->name('payments.view_file');
+		Route::post('payments/review', 'PaymentController@review')->name('payments.review');
+        Route::resource('payments','PaymentController');
+
+        Route::resource('std/premix','PremixController',[
+            'as' => 'std'
+        ]);
 
 	});
 
@@ -84,7 +92,7 @@ Route::group(['as' => 'auth.'], function () {
 		Route::resource('admins','Admin\AdminsController');
 
 		Route::get('/test', 'Admin\AdminsController@test')->name('admins.test');
-
+        Route::resource('/order_of_payments','Admin\OrderOfPaymentsController');
 		// Route::resource('shipping-permits', 'Shared\ShippingPermitController');
 		//Route::get('admin/shipping-permits','Shared\ShippingPermitController@index');
 
@@ -116,12 +124,28 @@ Route::group(['as' => 'auth.'], function () {
 	// });
 
 
-
+Route::get('/get_settings', function(){
+    if(request()->ajax()){
+        if(request()->has('lkgtc_multiplier')){
+            $setting = \App\Models\Settings::where('setting','lkgtc_multiplier')->first();
+            $multiplier = $setting->float_value;
+            $service_charge = 10.00;
+            return [
+                'amount' => number_format((request()->get('lkgtc_multiplier') * $multiplier),2)
+            ];
+        };
+    }
+    abort(404);
+})->name('dashboard.get_settings');
 /** Testing **/
 Route::get('/dashboard/test', function(){
 
 	//return dd(Illuminate\Support\Str::random(16));
 
+});
+
+Route::get('/testing_page', function(){
+    return view('dashboard.test');
 });
 
 Route::get('/receive', function(){

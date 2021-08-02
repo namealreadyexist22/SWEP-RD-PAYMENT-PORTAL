@@ -53,7 +53,7 @@ class LoginController extends Controller{
     
     public function username(){
 
-        return 'username';
+        return 'email';
     
     }
 
@@ -63,7 +63,6 @@ class LoginController extends Controller{
 
 
     protected function login(Request $request){
-
         $this->validateLogin($request);
 
         if ($this->hasTooManyLoginAttempts($request)) {
@@ -92,7 +91,7 @@ class LoginController extends Controller{
                 return redirect()->intended('dashboard/home');
 
             }
-        
+
         }
 
         $this->incrementLoginAttempts($request);

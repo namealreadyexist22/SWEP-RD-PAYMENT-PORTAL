@@ -55,7 +55,8 @@ class FunctionRepository extends BaseRepository implements FunctionInterface {
         $function->function_label = $request->function_label;
         $function->function_route = $request->function_route;
         $function->function_is_nav = $request->function_is_nav;
-        
+        $function->function_icon = $request->function_icon;
+        $function->function_belongs_to = $request->function_belongs_to;
         if(!$function->save()){
             abort(500, 'Error saving data');
         }
@@ -75,7 +76,8 @@ class FunctionRepository extends BaseRepository implements FunctionInterface {
         $function->function_route = $request->function_route;
         $function->function_label = $request->function_label;
         $function->function_is_nav = $request->function_is_nav;
-        
+        $function->function_icon = $request->function_icon;
+        $function->function_belongs_to = $request->function_belongs_to;
         if(!$function->save()){
             abort(500, 'Error updating data.');
         }

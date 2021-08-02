@@ -31,15 +31,17 @@ class UserController extends Controller
 
     
     public function store(UserFormRequest $request)
-    {   
+    {
+        //return $request;
         $user = $this->user_service->store($request); 
         return $user;
     }
 
    
-    public function show($id)
+    public function showForm()
     {
-        
+
+        return view('auth.signup');
     }
 
     public function edit($id)

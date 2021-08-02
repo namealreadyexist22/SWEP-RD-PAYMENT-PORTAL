@@ -35,7 +35,9 @@
               <th>Function Name</th>
               <th>Route</th>
               <th>Label</th>
+              <th>Icon</th>
               <th>Nav</th>
+              <th>Belongs to</th>
               <th style="width: 100px">Action</th>
             </tr>
           </thead>
@@ -69,7 +71,9 @@
         { "data": "function_name" },
         { "data": "function_route" },
         { "data": "function_label" },
+        { "data": "function_icon" },
         { "data": "function_is_nav" },
+        { "data": "function_belongs_to" },
         { "data": "action" },
 
       ],

@@ -8,7 +8,7 @@ use App\Swep\Services\Admin\MenuService;
 use App\Swep\Services\Admin\AdminService;
 use App\Swep\Services\Admin\AdminFunctionsService;
 use App\Http\Requests\Admin\AdminFormRequest;
-use Datatables;
+use DataTables;
 
 class AdminsController extends Controller
 {
@@ -34,7 +34,7 @@ class AdminsController extends Controller
         {   
             $data = request();
 
-            return Datatables::of($this->admin_service->fetchTable($data))
+            return DataTables::of($this->admin_service->fetchTable($data))
             ->addColumn('action', function($data){
                 $button = '<div class="btn-group">
                                 <button type="button" class="btn btn-default btn-sm functions_index_btn" data="'.$data->slug.'" data-toggle="modal" data-target ="#functions_index_modal" title="Functions" data-placement="left">

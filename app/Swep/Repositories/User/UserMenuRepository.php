@@ -87,7 +87,7 @@ class UserMenuRepository extends BaseRepository implements UserMenuInterface {
             $user_menus[$menu->label][$menu->slug]['menu_obj'] = $menu;
             if($menu->functions->count() > 0){
                 foreach ($menu->functions as $function) {
-                    if($function->belongs_to == 'user'){
+                    if($function->function_belongs_to == 'user'){
                         $user_menus[$menu->label][$menu->slug]['functions'][$function->function_name] = [];
                         $user_menus[$menu->label][$menu->slug]['functions'][$function->function_name]['function_obj'] = $function;
                     }

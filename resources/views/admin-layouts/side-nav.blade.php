@@ -37,7 +37,7 @@
               @if($menu['menu_obj']->is_dropdown == 1)
                 <li class="treeview">
                   <a href="#">
-                    <i class="fa fa-files-o"></i>
+                    <i class="{{$menu['menu_obj']->icon}}"></i>
                     <span>{{$menu['menu_obj']->menu_name}}</span>
                     <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
@@ -48,7 +48,7 @@
                       @foreach($menu['functions'] as $function)
                         @if($function['function_obj']->function_is_nav == 1)
                           <li>
-                            <a href="{{route($function['function_obj']->function_route)}}"><i class="fa fa-circle-o"></i>{{$function['function_obj']->function_label}}</a>
+                            <a href="{{route($function['function_obj']->function_route)}}"><i class="{{$function['function_obj']->function_icon != ''  ? $function['function_obj']->function_icon: 'fa fa-chevron-right' }}"></i> {{$function['function_obj']->function_label}}</a>
                           </li>
                         @endif
 

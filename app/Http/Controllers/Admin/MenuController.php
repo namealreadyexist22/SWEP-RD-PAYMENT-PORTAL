@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-// use Illuminate\Http\Request;
-//use Yajra\Datatables\Datatables;
+
 use App\Swep\Services\Admin\MenuService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\MenuFormRequest;
-use Datatables;
-use Yajra\DataTables\Html\Builder;
+use Yajra\DataTables\DataTables;
+
 
 class MenuController extends Controller
 {
@@ -32,7 +31,7 @@ class MenuController extends Controller
         {   
             $data = request();
 
-            return Datatables::of($this->menu_service->fetchTable($data))
+            return DataTables::of($this->menu_service->fetchTable($data))
             ->addColumn('action', function($data){
                 $button = '<div class="btn-group">
                                 <button type="button" class="btn btn-default btn-sm functions_index_btn" data="'.$data->slug.'" data-toggle="modal" data-target ="#functions_index_modal" title="Functions" data-placement="left">

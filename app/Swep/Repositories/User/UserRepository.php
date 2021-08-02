@@ -56,6 +56,9 @@ class UserRepository extends BaseRepository implements UserInterface {
         //$user->is_active = $request->is_active;
         //$user->is_verified = $request->is_verified;
         $user->phone = $request->phone;
+        $user->business_name = $request->business_name;
+        $user->business_tin = $request->business_tin;
+        $user->business_phone = $request->business_phone;
         $user->region = $request->region;
         $user->province = $request->province;
         $user->municipality = $request->municipality;
@@ -82,7 +85,8 @@ class UserRepository extends BaseRepository implements UserInterface {
 
     public function destroy($slug){
 
-       
+        $user = $this->user->where('slug',$slug)->first();
+        $user->delete();
 
     }
 

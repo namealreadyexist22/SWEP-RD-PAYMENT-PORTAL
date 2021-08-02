@@ -48,9 +48,22 @@ class UserService extends BaseService{
         if($user){
             $uev = $this->user_repo->storeEmailVerification($user->slug);
             if($uev){
+                $send_mail = $this->sendEmailVerification($user->first_name, $user->slug,$user->email ,$uev->verification_slug);
+                if($send_mail == 1){
+                    return 1;
+                }else{
+                    $this->user_repo->destroy($user->slug);
+                    return response()->json([
+                        'message' => "Error sending email verification",
+                        'trace' => $send_mail,
+                    ],500);
+                }
+//                if(!$this->sendEmailVerification($user->first_name, $user->slug,$user->email ,$uev->verification_slug)){
+//                    $this->user_repo->destroy($user->slug);
+//                }else{
+//                    return 1;
+//                };
 
-                $this->sendEmailVerification($user->first_name, $user->slug,$user->email ,$uev->verification_slug);
-                return 1;   
             }
         }else{
             abort(500, 'Error in UserService');
@@ -64,23 +77,28 @@ class UserService extends BaseService{
         $data = array("name"=>$to_name,"user_slug" => $user_slug, "verification_slug"=> $verification_slug);
         //return view('dashboard.mailables.otp');
         
-        Mail::send('dashboard.mailables.otp', $data, function ($message) use ($to_email,$to_name) {
-            $message->from('swep@gmail.com', 'SRA WEB PORTAL');
-            $message->sender('swep@gmail.com', 'SRA WEB PORTAL');
-        
-            $message->to($to_email, $to_name);
-        
-            // $message->cc('john@johndoe.com', 'John Doe');
-            // $message->bcc('john@johndoe.com', 'John Doe');
-        
-            // $message->replyTo('john@johndoe.com', 'John Doe');
-        
-            $message->subject('Email Verification');
-        
-            $message->priority(3);
-        
-            // $message->attach('pathToFile');
-        });
+        try{
+            Mail::send('dashboard.mailables.otp', $data, function ($message) use ($to_email,$to_name) {
+                $message->from('swep@gmail.com', 'SRA WEB PORTAL');
+                $message->sender('swep@gmail.com', 'SRA WEB PORTAL');
+
+                $message->to($to_email, $to_name);
+
+                // $message->cc('john@johndoe.com', 'John Doe');
+                // $message->bcc('john@johndoe.com', 'John Doe');
+
+                // $message->replyTo('john@johndoe.com', 'John Doe');
+
+                $message->subject('Email Verification');
+
+                $message->priority(3);
+
+                // $message->attach('pathToFile');
+            });
+            return 1;
+        }catch (\Exception $e){
+            return $e->getMessage();
+        }
     }
 
 
@@ -122,7 +140,7 @@ class UserService extends BaseService{
 
     public function destroy($slug){
 
-      
+      return $this->user_repo->destroy($slug);
 
     }
 

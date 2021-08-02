@@ -38,7 +38,7 @@ class RepositoryServiceProvider extends ServiceProvider {
 
 		$this->app->bind('App\Swep\Interfaces\User\UserInterface', 'App\Swep\Repositories\User\UserRepository');
 
-
+        $this->app->bind('App\Swep\Interfaces\User\OrderOfPaymentInterface', 'App\Swep\Repositories\User\OrderOfPaymentRepository');
 
 
 	}

@@ -4,14 +4,14 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Blank Page</title>
+  <title>SWEP | Online Payment Portal</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  @include('layouts.css-plugins') 
+  @include('admin-layouts.css-plugins')
   @yield('utils')
 
 </head>
@@ -23,7 +23,7 @@
 
   <!-- =============================================== -->
 
-  
+
     @include('admin-layouts.side-nav')
 
   <!-- =============================================== -->
@@ -33,7 +33,7 @@
     @yield('content')
   </div>
 
-  
+
     <!-- /.content-wrapper -->
 
     <footer class="main-footer">
@@ -241,7 +241,7 @@
  </div>
  <!-- ./wrapper -->
 
- @include('layouts.js-plugins')
+ @include('admin-layouts.js-plugins')
  @yield('modals')
 
   <script>
@@ -291,7 +291,7 @@
 
     $(document).ready(function(){
       cur_url = window.location.href;
-      
+
 
 
       $("a[href='"+cur_url+"']").parent('li').parent('ul').siblings('a').trigger('click');
@@ -299,11 +299,11 @@
       $("a[href='"+cur_url+"']").parent('li').parent('ul').parent('li').addClass('active');
 
       $("a[href='"+cur_url+"']").parent('li').addClass('active');
-      
+
 
     })
   </script>
-  
+
  @yield('scripts')
 
 

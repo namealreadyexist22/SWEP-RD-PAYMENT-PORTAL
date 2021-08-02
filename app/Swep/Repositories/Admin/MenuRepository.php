@@ -35,7 +35,7 @@ class MenuRepository extends BaseRepository implements MenuInterface {
     }
 
     public function fetchTable($data){
-        $get = $this->menu;
+        $get = $this->menu->with('functions');
 
         return $get->latest()->get();
     }
